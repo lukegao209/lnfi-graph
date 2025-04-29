@@ -1,0 +1,96 @@
+specVersion: 0.0.9
+schema:
+  file: ./schema.graphql
+dataSources:
+  # - kind: ethereum
+  #   name: LNNodeNFT
+  #   network: base
+  #   source:
+  #     address: "0xc3426c3BdDB1C41c5b2b793b7553667e94aB2669"  # Replace with actual contract address
+  #     abi: LNNodeNFT
+  #     startBlock: 26580696
+  #     endBlock: 26580696 # Replace with actual deployment block
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - LNNode
+  #       - NodeMiningReward
+  #       - ChannelMiningReward
+  #       - NodeEvent
+  #     abis:
+  #       - name: LNNodeNFT
+  #         file: ./abis/LNNodeNFT.json
+  #     eventHandlers:
+  #       - event: NodeMinted(indexed uint256,indexed address,indexed address)
+  #         handler: handleNodeMinted
+  #       - event: NodeNpubBound(indexed uint256,bytes32)
+  #         handler: handleNodeNpubBound
+  #       - event: NodeActivated(indexed uint256,bytes32,bytes32)
+  #         handler: handleNodeActivated
+  #       - event: NodeStatusChanged(indexed uint256,uint256)
+  #         handler: handleNodeStatusChanged
+  #       - event: Transfer(indexed address,indexed address,indexed uint256)
+  #         handler: handleTransfer
+  #       - event: RewardsAdded(indexed uint256,uint256,uint256,uint256)
+  #         handler: handleRewardsAdded
+  #     file: ./src/nodenft.ts
+  # - kind: ethereum
+  #   name: NodeSale
+  #   network: base
+  #   source:
+  #     address: "0xd2c2fea0Dee31C7F95004Fc8b15Ace8B2fb9eBb2"  # Replace with actual NodeSale contract address
+  #     abi: NodeSale
+  #     startBlock: 26580696 
+  #     endBlock: 26580696 # Replace with actual deployment block
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - NodeSale
+  #       - Purchase
+  #       - NodeBinding
+  #     abis:
+  #       - name: NodeSale
+  #         file: ./abis/NodeSale.json
+  #     eventHandlers:
+  #       - event: NodeSaleAdded(indexed uint256,uint256,string,address,uint256,uint256)
+  #         handler: handleNodeSaleAdded
+  #       - event: NodePurchased(indexed address,indexed uint256,uint256,uint256,uint256)
+  #         handler: handleNodePurchased
+  #       - event: NodeBinded(indexed address,bytes32,address,address)
+  #         handler: handleNodeBinded
+  #     file: ./src/nodesales.ts
+  - kind: ethereum
+    name: HashedTimeLock
+    network: base-sepolia
+    source:
+      address: "0xE601bF791ed8489039683390933c211C0BCE30f6"
+      abi: HashedTimeLock
+      startBlock: 25033535
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TimeLock
+        - TimeLockEvent
+      abis:
+        - name: HashedTimeLock
+          file: ./abis/HashedTimeLock.json
+      eventHandlers:
+        - event: LogNewPair(indexed bytes32,indexed address,indexed bytes32)
+          handler: handleNewPair
+        - event: LogNewAsset(indexed bytes32,string,uint8)
+          handler: handleNewAsset
+        - event: LogNewToken(indexed address,string,uint8)
+          handler: handleNewToken
+        - event: LogHTLCNew(indexed bytes32,bytes32,indexed address,indexed address,uint256,uint256,bytes32)
+          handler: handleHTLCNew
+        - event: LogHTLCWithdraw(indexed bytes32)
+          handler: handleHTLCWithdraw
+        - event: LogHTLCRefund(indexed bytes32)
+          handler: handleHTLCRefund
+      file: ./src/timelock.ts 

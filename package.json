@@ -1,0 +1,22 @@
+{
+  "name": "lnnode-subgraph",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy lnnode",
+    "create-local": "graph create --node http://localhost:8020/ lnfi/lnnode",
+    "remove-local": "graph remove --node http://localhost:8020/ lnfi/lnnode",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 lnfi/lnnode"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.68.0",
+    "@graphprotocol/graph-ts": "^0.32.0",
+    "typescript": "^5.0.0"
+  }
+}
