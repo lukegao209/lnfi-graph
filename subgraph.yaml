@@ -65,11 +65,11 @@ dataSources:
   #     file: ./src/nodesales.ts
   - kind: ethereum
     name: HashedTimeLock
-    network: base-sepolia
+    network: base
     source:
-      address: "0xE601bF791ed8489039683390933c211C0BCE30f6"
+      address: "0x356951d197bF70743D340AAeC30e242d024Cb749"
       abi: HashedTimeLock
-      startBlock: 25033535
+      startBlock: 29899561
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -93,4 +93,35 @@ dataSources:
           handler: handleHTLCWithdraw
         - event: LogHTLCRefund(indexed bytes32)
           handler: handleHTLCRefund
-      file: ./src/timelock.ts 
+      file: ./src/htlcpay.ts 
+  # - kind: ethereum
+  #   name: HTLCPay
+  #   network: bsc
+  #   source:
+  #     address: "0x356951d197bF70743D340AAeC30e242d024Cb749"
+  #     abi: HashedTimeLock
+  #     startBlock: 49230323
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - TimeLock
+  #       - TimeLockEvent
+  #     abis:
+  #       - name: HashedTimeLock
+  #         file: ./abis/HashedTimeLock.json
+  #     eventHandlers:
+  #       - event: LogNewPair(indexed bytes32,indexed address,indexed bytes32)
+  #         handler: handleNewPair
+  #       - event: LogNewAsset(indexed bytes32,string,uint8)
+  #         handler: handleNewAsset
+  #       - event: LogNewToken(indexed address,string,uint8)
+  #         handler: handleNewToken
+  #       - event: LogHTLCNew(indexed bytes32,bytes32,indexed address,indexed address,uint256,uint256,bytes32)
+  #         handler: handleHTLCNew
+  #       - event: LogHTLCWithdraw(indexed bytes32)
+  #         handler: handleHTLCWithdraw
+  #       - event: LogHTLCRefund(indexed bytes32)
+  #         handler: handleHTLCRefund
+  #     file: ./src/htlcpay.ts 

@@ -10,7 +10,6 @@ import {
 } from '../generated/HashedTimeLock/HashedTimeLock'
 import { AstraAsset, AstraHTLC, AstraPair, AstraToken } from '../generated/schema'
 
-
 export function handleNewPair(event: LogNewPair): void {
     log.info("NewPair - pairId: {}", [event.params.pairId.toHexString()])
     let pair = new AstraPair(event.params.pairId.toHexString())
@@ -67,8 +66,7 @@ export function handleHTLCNew(event: LogHTLCNew): void {
         log.error("HTLCNew - Pair not found for contractId: {}", [contractId])
         return
     }
-    // 创建合约实例
-    // 创建新的 TimeLock 实体
+
     let htlc = new AstraHTLC(contractId)
     htlc.sender = event.params.sender
     htlc.receiver = event.params.receiver
@@ -94,7 +92,7 @@ export function handleHTLCNew(event: LogHTLCNew): void {
 export function handleHTLCWithdraw(event: LogHTLCWithdraw): void {
   const contractId = event.params.contractId.toHexString()
   
-  // 更新 TimeLock 实体
+  // load htlc
   let timeLock = AstraHTLC.load(contractId)
   if (timeLock) {
     // load contract
@@ -105,19 +103,8 @@ export function handleHTLCWithdraw(event: LogHTLCWithdraw): void {
     timeLock.withdrawn = true
     timeLock.preimage = contractInfo.preimage
     timeLock.watcher = contractInfo.watcher
-    // timeLock.preimage = event.params.preimage
     timeLock.closedAt = event.block.timestamp
     timeLock.save()
-    
-    // // 创建 TimeLockEvent
-    // const eventId = event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
-    // let timeLockEvent = new TimeLockEvent(eventId)
-    // timeLockEvent.type = "WITHDRAW"
-    // timeLockEvent.timeLock = contractId
-    // // timeLockEvent.preimage = event.params.preimage
-    // timeLockEvent.timestamp = event.block.timestamp
-    // timeLockEvent.transactionHash = event.transaction.hash.toHexString()
-    // timeLockEvent.save()
     
     log.info("HTLC Withdraw - contractId: {}", [contractId])
   } else {
@@ -140,15 +127,6 @@ export function handleHTLCRefund(event: LogHTLCRefund): void {
     timeLock.closedAt = event.block.timestamp
     timeLock.watcher = contractInfo.watcher
     timeLock.save()
-    
-    // // 创建 TimeLockEvent
-    // const eventId = event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
-    // let timeLockEvent = new TimeLockEvent(eventId)
-    // timeLockEvent.type = "REFUND"
-    // timeLockEvent.timeLock = contractId
-    // timeLockEvent.timestamp = event.block.timestamp
-    // timeLockEvent.transactionHash = event.transaction.hash.toHexString()
-    // timeLockEvent.save()
     
     log.info("HTLC Refund - contractId: {}", [contractId])
   } else {

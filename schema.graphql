@@ -75,48 +75,48 @@ type NodeBinding @entity(immutable: true) {
   timestamp: BigInt!
 }
 
-# Token 实体
+# Token Entity
 type AstraToken @entity(immutable: true) {
-  id: ID!           # token 地址
-  name: String!     # token 名称
-  decimal: Int!     # token 精度
+  id: ID!           # token address
+  name: String!     # token name
+  decimal: Int!     # token decimals
   createdAt: BigInt!
   transactionHash: String!
 }
 
-# 闪电网络资产
+# Lightning Network Asset
 type AstraAsset @entity(immutable: true) {
   id: ID!           # assetId
-  name: String!     # 资产名称
-  decimal: Int!     # 资产精度
+  name: String!     # asset name
+  decimal: Int!     # asset decimals
   createdAt: BigInt!
   transactionHash: String!
 }
 
-# 哈希锁币对
+# Hash-Locked Token Pair
 type AstraPair @entity(immutable: true) {
   id: ID!           # pairId
-  pairId: Bytes!    # 币对ID
-  token: AstraToken!     # 关联的代币
-  asset: AstraAsset!     # 关联的闪电资产
+  pairId: Bytes!    # pair ID
+  token: AstraToken!     # associated token
+  asset: AstraAsset!     # associated lightning asset
   createdAt: BigInt!
   transactionHash: String!
 }
 
-# 哈希时间锁合约相关实体
+# Hash Time Locked Contract (HTLC) Related Entity
 type AstraHTLC @entity(immutable: false) {
   id: ID!           # contractId
-  sender: Bytes!    # 发送者地址
-  receiver: Bytes!  # 接收者地址
-  nodePubkey: Bytes!   # 节点的pubkey
-  pair: AstraPair!  # 关联的币对
-  watcher: Bytes    # 结算者地址
-  amount: BigInt!   # 锁定金额
-  hashlock: Bytes!  # 哈希锁
-  timelock: BigInt! # 时间锁
-  withdrawn: Boolean! # 是否已提取
-  refunded: Boolean!  # 是否已退款
-  preimage: Bytes    # 原像(如果已提取)
-  createdAt: BigInt! # 创建时间
-  closedAt: BigInt   # 关闭时间(提取或退款)
+  sender: Bytes!    # sender address
+  receiver: Bytes!  # receiver address
+  nodePubkey: Bytes!   # node pubkey
+  pair: AstraPair!  # associated pair
+  watcher: Bytes    # settlement address
+  amount: BigInt!   # locked amount
+  hashlock: Bytes!  # hash lock
+  timelock: BigInt! # time lock
+  withdrawn: Boolean! # whether withdrawn
+  refunded: Boolean!  # whether refunded
+  preimage: Bytes    # preimage (if withdrawn)
+  createdAt: BigInt! # creation time
+  closedAt: BigInt   # closing time (withdrawn or refunded)
 }
